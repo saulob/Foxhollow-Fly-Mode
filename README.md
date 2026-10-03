@@ -24,10 +24,19 @@ It is based on the already-tested Fly Mode from the Foxhollow `feature/cheat-men
 
 - Fly Mode works while Fox or Krystal is controllable on foot, including while swimming and in combat stances. It does nothing in the Arwing, on the CloudRunner, during cutscenes, while climbing, while carrying an object or while controls are locked.
 - F6 and F7 do nothing while the Viewfinder or the World Map is open.
-- Horizontal movement stops when the next step would leave the map.
+- Horizontal movement stops when the next step would leave the map, including when another mod makes that step longer (such as Fast Movement).
 - While Fly Mode is on, the safe position is updated automatically, but only while the player is somewhere valid: inside the map, with floor below, and not on a moving platform, warp or scripted interaction.
 - F8 also works after Fly Mode is turned off, returning to the last safe position saved while it was on.
 - Changing map or layer, or warping, clears the saved safe position, so F8 never returns you to a position from another area.
+
+## Compatibility
+
+Works on its own, and together with:
+
+- [Foxhollow Player Cheats](https://github.com/saulob/Foxhollow-Player-Cheats): Fast Movement doubles horizontal flying speed. Fly Up and Fly Down keep their normal speed.
+- [Foxhollow Noclip](https://github.com/saulob/Foxhollow-Noclip): fly through walls. Noclip's fall protection steps aside while Fly Mode controls the height (rising, descending or hovering).
+
+All three mods can be installed and used at the same time, in any load order.
 
 ## Installation
 

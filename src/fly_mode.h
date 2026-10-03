@@ -146,6 +146,7 @@ int flyModeGameplayActive(void);
 void flyModeUpdateSession(void);
 void flyModePoll(int toggleKeyDown, int upKeyDown, int downKeyDown, int returnKeyDown, int active);
 void flyModeUpdate(GameObject* player);
+void flyModeAfterMove(GameObject* player);
 void flyModeReset(void);
 
 #endif

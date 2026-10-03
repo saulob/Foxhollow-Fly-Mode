@@ -40,6 +40,9 @@ static int sFlyDownArmed;
 static int sFlyToggleWasDown;
 static int sFlyReturnWasDown;
 static SafePosition sSafe;
+static GameObject* sMovePlayer;
+static float sMoveX;
+static float sMoveZ;
 
 int flyModeGameplayActive(void) {
   return game.getGameState() == GAME_STATE_RUNNING && game.getCurUiDll() == UI_DLL_GAMEPLAY &&
@@ -73,6 +76,7 @@ void flyModeUpdateSession(void) {
     }
     set_fly(0);
     sSafe.valid = 0;
+    sMovePlayer = NULL;
   }
 }
 
@@ -253,7 +257,9 @@ static int fly_crossed_water_surface(PlayerState* st, int input) {
 
 /* The cheat menu scaled this step by its Fast Movement factor, which is 1
    whenever Fast Movement is off; this mod has no Fast Movement, so the
-   prediction uses the normal step that playerUpdate passes to objMove. */
+   prediction uses the normal step that playerUpdate passes to objMove.
+   Another mod (Player Cheats' Fast Movement) may still lengthen that step, so
+   the start of the move is kept for flyModeAfterMove. */
 static void fly_keep_inside_map(GameObject* player, PlayerState* st) {
   float step;
 
@@ -263,6 +269,27 @@ static void fly_keep_inside_map(GameObject* player, PlayerState* st) {
   step = *game.timeDelta;
   if (game.isInBounds(player->localPosX + player->velocityX * step, player->localPosZ + player->velocityZ * step) ==
       0) {
+    player->velocityX = 0.0f;
+    player->velocityZ = 0.0f;
+  }
+  sMovePlayer = player;
+  sMoveX = player->localPosX;
+  sMoveZ = player->localPosZ;
+}
+
+/* Runs inside playerUpdate after the main objMove. When the step taken was
+   longer than the one predicted and ended in an empty map block, the
+   horizontal part is undone, leaving the player where a zeroed step would
+   have. When the step taken is the one predicted, its end was already
+   checked and there is nothing to undo. */
+void flyModeAfterMove(GameObject* player) {
+  if (player == NULL || player != sMovePlayer) {
+    return;
+  }
+  sMovePlayer = NULL;
+  if (game.isInBounds(player->localPosX, player->localPosZ) == 0) {
+    player->localPosX = sMoveX;
+    player->localPosZ = sMoveZ;
     player->velocityX = 0.0f;
     player->velocityZ = 0.0f;
   }
@@ -301,4 +328,5 @@ void flyModeReset(void) {
   sFlyToggleWasDown = 0;
   sFlyReturnWasDown = 0;
   memset(&sSafe, 0, sizeof(sSafe));
+  sMovePlayer = NULL;
 }

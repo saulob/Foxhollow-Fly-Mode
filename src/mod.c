@@ -46,7 +46,7 @@ FH_MOD_EXPORT int fh_mod_initialize(FhMod* mod, const FhModHost* host) {
     modLog(FH_LOG_ERROR, "disabled: required host symbols or hooks are unavailable");
     return FH_MOD_ERROR;
   }
-  modLog(FH_LOG_INFO, "v1.0.0 loaded (F5 Toggle, F6 Up, F7 Down, F8 Safe)");
+  modLog(FH_LOG_INFO, "v1.0.1 loaded (F5 Toggle, F6 Up, F7 Down, F8 Safe)");
   return FH_MOD_OK;
 }
 
