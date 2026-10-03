@@ -1,0 +1,10 @@
+{
+  "id": "com.saulob.fly-mode",
+  "name": "Fly Mode",
+  "version": "1.0.0",
+  "author": "saulob",
+  "description": "Adds a Fly Mode to Star Fox Adventures using F5-F8: Toggle Fly Mode (F5), Fly Up (F6), Fly Down (F7) and Return to Safe Position (F8)",
+  "compatibility": {
+    "abi": 2
+  }
+}
